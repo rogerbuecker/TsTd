@@ -16,7 +16,7 @@ export class SimpleEnemy extends Enemy {
 
   constructor(base: Base) {
     super(base);
-    this.image.src = "public/img/running.png";
+    this.image.src = "img/running.png";
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

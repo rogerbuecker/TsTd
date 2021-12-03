@@ -22,7 +22,7 @@ export class Base extends GridRenderable {
     super(x, y, width);
     this.colors = isHome ? colors.homeBase : colors.enemyBase;
     this.isHome = isHome;
-    this.image.src = "public/img/base.png";
+    this.image.src = "img/base.png";
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

@@ -6,7 +6,7 @@ export class Rock extends GridRenderable {
 
   constructor(x: number, y: number, width: number) {
     super(x, y, width);
-    this.image.src = "public/img/stone.png";
+    this.image.src = "img/stone.png";
   }
 
   draw(ctx: CanvasRenderingContext2D): void {

@@ -1,6 +1,5 @@
-# TsTd
-
-Minimalistic tower defense in the browser.
+# Inert
+Minimalistic tower defense in the browser. 
 
 ## Dev
 
