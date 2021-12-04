@@ -1,4 +1,3 @@
-import {version} from './../package.json'
 import {CanonTower} from "./entities/towers/CanonTower";
 import {GatlingTower} from "./entities/towers/GatlingTower";
 import {Tower} from "./entities/towers/Tower";
@@ -35,7 +34,7 @@ class InterfaceManager {
 
     showFocusLost() {
         this.snackbar.hide();
-        this.snackbar.setText('Focus as been lost, click on the window to continue.');
+        this.snackbar.setText('Focus has been lost, click on the window to continue.');
         this.snackbar.show()
     }
 

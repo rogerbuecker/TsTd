@@ -44,7 +44,6 @@ class Game {
         ctx.save();
         canvas.clear();
         camera.process(ctx);
-
         map.drawGrid(ctx);
         munitionManager.draw(ctx);
         enemyManager.draw(ctx);

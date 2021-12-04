@@ -1,69 +1,110 @@
-import {Map} from "./Map";
-import {canvas} from "./Canvas";
-import {controls} from "./Controls";
-import {towerPlacer} from "./TowerPlacer";
+import { Map } from "./Map";
+import { canvas } from "./Canvas";
+import { controls } from "./Controls";
 
 export class Camera {
-    x: number = Map.TILE_SIZE * Map.GRID_W / 2;
-    y: number = Map.TILE_SIZE * Map.GRID_H / 2;
-    scaleRatio: number = 0.82;
-    static DELTA_MOVE: number = 100;
-    static SCALE_FACTOR: number = 0.1;
-    scaleCenter = {
-        x: -this.x + canvas.getElement().width / 2,
-        y: -this.y + canvas.getElement().height / 2
-    }
-    private dragging: boolean = false;
-    private dragStartCoordinates = {x: 0, y: 0};
-    private dragDeltaDistances = {x: 0, y: 0};
+  x: number = (Map.TILE_SIZE * Map.GRID_W) / 2;
+  y: number = (Map.TILE_SIZE * Map.GRID_H) / 2;
+  rotation: number = 0;
 
-    constructor() {
-        controls.on('keydown:ARROWUP', () => this.move(0, -Camera.DELTA_MOVE))
-        controls.on('keydown:ARROWDOWN', () => this.move(0, Camera.DELTA_MOVE))
-        controls.on('keydown:ARROWRIGHT', () => this.move(Camera.DELTA_MOVE, 0))
-        controls.on('keydown:ARROWLEFT', () => this.move(-Camera.DELTA_MOVE, 0))
-        controls.on('wheel:up', () => this.scale(1 + Camera.SCALE_FACTOR))
-        controls.on('wheel:down', () => this.scale(1 - Camera.SCALE_FACTOR))
-        controls.on('mousedown', () => {
-            if (!towerPlacer.placing) {
-                this.dragging = true;
-                this.dragStartCoordinates = controls.mouse;
-            }
-        })
-        controls.on('mouseup', () => {
-            this.dragging = false;
-            this.move(-this.dragDeltaDistances.x, -this.dragDeltaDistances.y)
-            this.dragDeltaDistances = {x: 0, y: 0}
-        })
-    }
+  scaleRatio: number = 0.82;
+  rotationRatio: number = 100;
 
-    update(): void {
-        if (this.dragging) {
-            this.dragDeltaDistances = {
-                x: (controls.mouse.x - this.dragStartCoordinates.x) / this.scaleRatio,
-                y: (controls.mouse.y - this.dragStartCoordinates.y) / this.scaleRatio
-            }
-        }
-    }
+  static DELTA_MOVE: number = 100;
+  static SCALE_FACTOR: number = 0.1;
 
-    process(ctx: CanvasRenderingContext2D): void {
-        ctx.translate(canvas.getElement().width / 2, canvas.getElement().height / 2)
-        ctx.scale(this.scaleRatio, this.scaleRatio)
-        ctx.translate(-this.x + this.dragDeltaDistances.x, -this.y + this.dragDeltaDistances.y);
+  private dragging: boolean = false;
+  private dragStartCoordinates = { x: 0, y: 0 };
+  private dragDeltaDistances = { x: 0, y: 0 };
 
-        canvas.updateTransformMatrix();
-    }
+  private rotating: boolean = false;
+  private rotatingStartX = 0;
+  private rotatingDeltaX = 0;
 
-    private move(dx: number, dy: number) {
-        this.x = Math.min(Math.max(this.x + dx, 0), Map.TILE_SIZE * Map.GRID_W);
-        this.y = Math.min(Math.max(this.y + dy, 0), Map.TILE_SIZE * Map.GRID_H);
-    }
+  constructor() {
+    controls.on("keydown:ARROWUP", () => this.move(0, -Camera.DELTA_MOVE));
+    controls.on("keydown:ARROWDOWN", () => this.move(0, Camera.DELTA_MOVE));
+    controls.on("keydown:ARROWRIGHT", () => this.move(Camera.DELTA_MOVE, 0));
+    controls.on("keydown:ARROWLEFT", () => this.move(-Camera.DELTA_MOVE, 0));
+    controls.on("wheel:up", () => this.scale(1 + Camera.SCALE_FACTOR));
+    controls.on("wheel:down", () => this.scale(1 - Camera.SCALE_FACTOR));
 
-    private scale(factor: number) {
-        this.scaleRatio *= factor;
-        this.scaleCenter = {...controls.mouse};
+    controls.on("mousedown:MIDDLE", () => {
+      this.dragging = true;
+      this.dragStartCoordinates = controls.mouse;
+    });
+    controls.on("mouseup:MIDDLE", () => {
+      this.dragging = false;
+      this.move(-this.dragDeltaDistances.x, -this.dragDeltaDistances.y);
+      this.dragDeltaDistances = { x: 0, y: 0 };
+    });
+
+    controls.on("mousedown:RIGHT", () => {
+      this.rotating = true;
+      this.rotatingStartX = controls.mouse.x;
+    });
+    controls.on("mouseup:RIGHT", () => {
+      this.rotating = false;
+      this.rotate(this.degreesToRadians(this.rotation + this.rotatingDeltaX));
+      this.rotatingDeltaX = 0;
+    });
+  }
+
+  update(): void {
+    if (this.dragging) {
+      this.dragDeltaDistances = {
+        x: (controls.mouse.x - this.dragStartCoordinates.x) / this.scaleRatio,
+        y: (controls.mouse.y - this.dragStartCoordinates.y) / this.scaleRatio,
+      };
     }
 
+    if (this.rotating) {
+      this.rotatingDeltaX =
+        (controls.mouse.x - this.rotatingStartX) / this.rotationRatio;
+    }
+  }
+
+  process(ctx: CanvasRenderingContext2D): void {
+    /* ctx.translate(-this.x + this.dragDeltaDistances.x, -this.y + this.dragDeltaDistances.y); */
+
+    ctx.translate(
+      canvas.getElement().width / 2,
+      canvas.getElement().height / 2
+    );
+
+    ctx.translate(-this.x + this.dragDeltaDistances.x, -this.y + this.dragDeltaDistances.y);
+
+    ctx.rotate(this.degreesToRadians(this.rotation + this.rotatingDeltaX));
+    ctx.scale(this.scaleRatio, this.scaleRatio);
+
+  /*   ctx.translate(
+      canvas.getElement().width / -2,
+      canvas.getElement().height / -2
+    );
+ */
+    
+    //ctx.translate(this.x + this.dragDeltaDistances.x, this.y + this.dragDeltaDistances.y);
+
+    canvas.updateTransformMatrix();
+  }
+
+  private degreesToRadians(degrees: number) {
+    return (Math.PI * degrees) / 180;
+  };
+  
+
+  private move(dx: number, dy: number) {
+    this.x = Math.min(Math.max(this.x + dx, 0), Map.TILE_SIZE * Map.GRID_W);
+    this.y = Math.min(Math.max(this.y + dy, 0), Map.TILE_SIZE * Map.GRID_H);
+  }
+
+  private scale(factor: number) {
+    this.scaleRatio *= factor;
+  }
+
+  private rotate(angel: number) {
+    this.rotation = angel;
+  }
 }
 
 export const camera = new Camera();

@@ -1,6 +1,7 @@
 import { Base } from "./entities/terrain/Base";
 import { GridRenderable } from "./interfaces/GridRenderable";
 import { Rock } from "./entities/terrain/Rock";
+import { Island } from "./entities/terrain/Island";
 import { Point } from "./interfaces/Point";
 import { easyAStar } from "./tools/astar";
 import { randIndex } from "./tools/helphers";
@@ -10,24 +11,22 @@ import { drawRoundedSquare } from "./tools/shapes";
 import { queryParamsManager } from "./QueryParamsManager";
 
 class Map extends EventEmitter {
-  public static GRID_W = 25;
-  public static GRID_H = 25;
-  public static OBSTACLES = 150;
+  public static GRID_W = 45;
+  public static GRID_H = 45;
+  public static OBSTACLES = 400;
   public grid: (GridRenderable | 0 | 1)[][] = new Array(Map.GRID_W)
     .fill(0)
     .map(() => new Array(Map.GRID_H).fill(0));
   public static TILE_SIZE: number = 40;
   public homeBase: Base;
-  public tick: number;
   public enemyBases: Base[] = [];
   private pathsCache: { [k: string]: Point[] | false } = {};
-  public waves: { frequency: number; current: number; amplitude: number; }[] = [];
 
   constructor() {
     super();
     this.homeBase = this.addBase(
-      Math.floor(Map.GRID_W / 2),
-      Math.floor(Map.GRID_H / 2),
+      Map.GRID_W - 5, 
+      5,
       true
     );
 
@@ -39,80 +38,26 @@ class Map extends EventEmitter {
       this.enemyBases.push(this.addBase(Map.GRID_W - 5, Map.GRID_H - 5));
     if (difficulty > 3) this.enemyBases.push(this.addBase(4, 4));
 
-    for (let i = 0; i < Map.OBSTACLES; i++) {
+    var small = (15 / 100) * Map.OBSTACLES;
+    var big = (85 / 100) * Map.OBSTACLES;
+
+    for (let i = 0; i < small; i++) {
       this.addElement(randIndex(this.grid), randIndex(this.grid[0]), Rock);
     }
 
-    this.waves.push({
-      frequency: 0.02,
-      current: 0.04,
-      amplitude: 0,
-    });
-    this.waves.push({
-      frequency: 0.02,
-      current: 0.032,
-      amplitude: 25,
-
-    });
-    this.waves.push({
-      frequency: 0.025,
-      current: 0.03,
-      amplitude: 15,
-    });
-    this.tick = 0;
+    for (let i = 0; i < big; i++) {
+      this.addElement(randIndex(this.grid), randIndex(this.grid[0]), Island);
+    }
   }
 
   drawGrid(ctx: CanvasRenderingContext2D) {
     const gridWidth = Map.GRID_W * Map.TILE_SIZE;
     const gridHeight = Map.GRID_H * Map.TILE_SIZE;
 
-    const fullWith = document.body.clientWidth;
-    const fullHeight = document.body.clientHeight;
+    ctx.fillStyle = '#9ae2eb'
+    ctx.fillRect(0, 0, gridWidth, gridHeight);
 
-    /* ctx.fillStyle = '#07737a'
-        ctx.fillRect(0, 0, gridWidth, gridHeight); */
-
-    this.waves.forEach((wave) => {
-      const getY = (x: number) => {
-        // Offset by half the canvas to start, and add the extra offset at the end.
-        return (
-            fullHeight / 2 -
-          Math.cos(x * wave.frequency - this.tick) *
-          wave.amplitude *
-            Math.cos(this.tick) +
-          Math.sin(this.tick) * (wave.amplitude / 2)
-        );
-      };
-
-      ctx.shadowColor = "#4aA9C8";
-      ctx.shadowBlur = 6;
-      ctx.shadowOffsetX = 0;
-      ctx.shadowOffsetY = 2;
-      ctx.strokeStyle = "#3a99b8";
-      ctx.fillStyle = "#3a99b8";
-      ctx.beginPath();
-
-      // Move to first coordinate.
-      ctx.moveTo(0, getY(0));
-
-      // Draw the wave across the x axis.
-      for (let x = 1; x < fullWith; x++) {
-        ctx.lineTo(x, getY(x));
-      }
-      ctx.stroke();
-
-      // Close the shape around the bottom of the canvas.
-      ctx.lineTo(fullWith, fullHeight);
-      ctx.lineTo(0, fullHeight);
-      ctx.closePath();
-      ctx.fill();
-
-      this.tick += .01;
-
-      console.log(wave);
-    });
-
-    ctx.strokeStyle = "#25272b";
+    ctx.strokeStyle = "#50cbfe";
     ctx.lineWidth = 1;
     ctx.beginPath();
 
@@ -127,7 +72,7 @@ class Map extends EventEmitter {
     ctx.closePath();
     ctx.stroke();
 
-    ctx.strokeStyle = "#4a4a4e";
+    ctx.strokeStyle = "#50cbfe";
     ctx.lineWidth = 3;
     drawRoundedSquare(ctx, 0, 0, gridWidth, gridHeight, 4);
     ctx.stroke();
