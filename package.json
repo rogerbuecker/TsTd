@@ -13,11 +13,11 @@
   "browserslist": [
     "last 1 Chrome versions"
   ],
-  "dependencies": {},
-  "devDependencies": {
+  "dependencies": {
     "less": "^3.11.1",
-    "parcel-bundler": "^1.12.4",
     "pug": "^3.0.0",
-    "typescript": "^3.8.3"
-  }
+    "typescript": "^3.8.3",
+    "parcel-bundler": "^1.12.4"
+  },
+  "devDependencies": {}
 }
