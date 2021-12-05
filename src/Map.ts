@@ -11,9 +11,9 @@ import { drawRoundedSquare } from "./tools/shapes";
 import { queryParamsManager } from "./QueryParamsManager";
 
 class Map extends EventEmitter {
-  public static GRID_W = 45;
-  public static GRID_H = 45;
-  public static OBSTACLES = 400;
+  public static GRID_W = 16;
+  public static GRID_H = 16;
+  public static OBSTACLES = 20;
   public grid: (GridRenderable | 0 | 1)[][] = new Array(Map.GRID_W)
     .fill(0)
     .map(() => new Array(Map.GRID_H).fill(0));

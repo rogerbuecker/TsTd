@@ -1,5 +1,4 @@
 import { EventEmitter } from "./tools/EventEmitter";
-import { colors } from "./config.json";
 
 class Canvas extends EventEmitter {
   private readonly ctx: CanvasRenderingContext2D;
@@ -44,10 +43,16 @@ class Canvas extends EventEmitter {
   }
 
   private resize() {
-    this.canvasElement.width = document.body.clientWidth;
-    this.canvasElement.height = document.body.clientHeight;
+    // Check if the canvas is not the same size.
+    const needResize =
+      this.canvasElement.width !== document.body.clientWidth ||
+      this.canvasElement.height !== document.body.clientHeight;
 
-    this.emit("resize", this.canvasElement);
+    if (needResize) {
+      this.canvasElement.width = document.body.clientWidth;
+      this.canvasElement.height = document.body.clientHeight;
+      this.emit("resize", this.canvasElement);
+    }
   }
 
   public getElement(): HTMLCanvasElement {
@@ -92,7 +97,7 @@ class Canvas extends EventEmitter {
     ctx.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     ctx.restore();
 
-/*     this.waves.forEach((wave) => {
+    /*     this.waves.forEach((wave) => {
       const getY = (x: number) => {
         return (
           this.canvasElement.height / 2 -

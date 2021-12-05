@@ -87,10 +87,26 @@ class Controls extends EventEmitter {
   }
 
   boundMouseCoordinates(e: MouseEvent) {
-    return {
-      x: (e.clientX - this.bounds.left) / (this.bounds.right - this.bounds.left) * this.element.clientWidth,
-      y: (e.clientY - this.bounds.top) / (this.bounds.bottom - this.bounds.top) * this.element.clientHeight,
-    };
+    const screenX =
+      (e.clientX - this.bounds.left) *
+      (this.element.clientWidth / this.bounds.width);
+    const screenY =
+      (e.clientY - this.bounds.top) *
+      (this.element.clientHeight / this.bounds.height);
+
+    const transform = canvas.getCtx().getTransform();
+    if (transform.isIdentity) {
+      return {
+        x: screenX,
+        y: screenY,
+      };
+    } else {
+      const invMat = transform.invertSelf();
+      return {
+        x: Math.round(screenX * invMat.a + screenY * invMat.c + invMat.e),
+        y: Math.round(screenX * invMat.b + screenY * invMat.d + invMat.f),
+      };
+    }
   }
 
   tabHasFocus() {

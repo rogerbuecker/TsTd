@@ -6,9 +6,9 @@ export class SimpleEnemy extends AnimatedEnemy {
   speed: number = 2.5;
   cash: number = 5;
   radius: number = 8;
-  numberOfFrames: number = 6;
+  numberOfFrames: number = 4;
   ticksPerFrame: number = 1;
-  animationSrc: string = "img/running.png";
+  animationSrc: string = "img/ship.png";
 
   constructor(base: Base, numberOfFrames: number, ticksPerFrame: number) {
     super(base, numberOfFrames, ticksPerFrame);

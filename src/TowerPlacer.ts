@@ -29,6 +29,12 @@ class TowerPlacer extends Renderable {
             }
         })
 
+        controls.on('mousedown:RIGHT', () => {
+            if (this.placing) {
+                this.placing = false;
+            }
+        })
+
         controls.on('keydown:ESCAPE', () => {
             if (this.placing) {
                 this.placing = false;
