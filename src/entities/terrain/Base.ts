@@ -9,7 +9,7 @@ export class Base extends GridRenderable {
   public traversable = true;
   image: HTMLImageElement = new Image();
   private isHome: boolean;
-  private maxLife: number = 500;
+  private maxLife: number = 15;
   private life: number = this.maxLife;
   protected healthBar = {
     yOffset: 23,

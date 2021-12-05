@@ -6,7 +6,7 @@ import {HealEffect} from "../effects/HealEffect";
 
 export class HealerEnemy extends Enemy {
     life: number = 200;
-    speed: number = 2.5;
+    speed: number = 1.25;
     cash: number = 10;
     radius = 8;
     healRadius = Map.TILE_SIZE;

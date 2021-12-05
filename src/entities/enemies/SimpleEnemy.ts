@@ -3,7 +3,7 @@ import { Base } from "../terrain/Base";
 
 export class SimpleEnemy extends AnimatedEnemy {
   life: number = 50;
-  speed: number = 2.5;
+  speed: number = 1.25;
   cash: number = 5;
   radius: number = 8;
   numberOfFrames: number = 4;

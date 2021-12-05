@@ -1,6 +1,6 @@
 {
-  "initialBalance": 2000,
-  "fps": 30,
+  "initialBalance": 200,
+  "fps": 60,
   "containerID": "game-wrapper",
   "colors": {
     "background": "#07737a",

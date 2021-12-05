@@ -4,7 +4,7 @@ import {colors} from "../../config.json"
 
 export class ArmoredEnemy extends Enemy {
     life: number = 200;
-    speed: number = 2.5;
+    speed: number = 1.25;
     cash: number = 10;
     radius = 8
 

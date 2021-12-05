@@ -11,15 +11,15 @@ export class QueryParamsManager {
                 const diff = parseInt(<string>this.params.get('spawners'))
 
                 if(diff < 1 || diff > 4){
-                    return 2;
+                    return 1;
                 }else{
                     return diff;
                 }
             }else {
-                return 2;
+                return 1;
             }
         }catch (e) {
-            return 2;
+            return 1;
         }
     }
 }

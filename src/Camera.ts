@@ -17,11 +17,11 @@ export class Camera {
   cameraZoom: number = 1;
   cameraRotation: number = 0;
 
-  static MAX_ZOOM: number = 5;
+  static MAX_ZOOM: number = 2.5;
   static MIN_ZOOM: number = 0.5;
 
   static DELTA_MOVE: number = 100;
-  static SCROLL_SENSITIVITY: number = 0.05;
+  static SCROLL_SENSITIVITY: number = 0.1;
 
   private isDragging: boolean = false;
   private isRotating: boolean = false;
@@ -31,13 +31,31 @@ export class Camera {
 
   constructor() {
     controls.on(
-      "wheel:up",
-      () => (this.cameraZoom += Camera.SCROLL_SENSITIVITY)
+      "keydown:ARROWUP",
+      () => (this.cameraOffset.y -= Camera.DELTA_MOVE)
     );
     controls.on(
-      "wheel:down",
-      () => (this.cameraZoom -= Camera.SCROLL_SENSITIVITY)
+      "keydown:ARROWDOWN",
+      () => (this.cameraOffset.y += Camera.DELTA_MOVE)
     );
+    controls.on(
+      "keydown:ARROWRIGHT",
+      () => (this.cameraOffset.x += Camera.DELTA_MOVE)
+    );
+    controls.on(
+      "keydown:ARROWLEFT",
+      () => (this.cameraOffset.x -= Camera.DELTA_MOVE)
+    );
+    controls.on("wheel:up", () => {
+      this.cameraZoom += Camera.SCROLL_SENSITIVITY;
+      this.cameraZoom = Math.min(this.cameraZoom, Camera.MAX_ZOOM);
+      this.cameraZoom = Math.max(this.cameraZoom, Camera.MIN_ZOOM);
+    });
+    controls.on("wheel:down", () => {
+      this.cameraZoom -= Camera.SCROLL_SENSITIVITY;
+      this.cameraZoom = Math.min(this.cameraZoom, Camera.MAX_ZOOM);
+      this.cameraZoom = Math.max(this.cameraZoom, Camera.MIN_ZOOM);
+    });
 
     controls.on("mousedown:LEFT", () => {
       if (!towerPlacer.placing) {

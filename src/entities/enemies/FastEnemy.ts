@@ -4,7 +4,7 @@ import {colors} from "../../config.json"
 
 export class FastEnemy extends Enemy {
     life: number = 200;
-    speed: number = 4;
+    speed: number = 2;
     cash: number = 20;
     radius = 8
 

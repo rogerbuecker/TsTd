@@ -8,7 +8,7 @@ import {Snackbar} from "./tools/Snackbar";
 import {LaserTower} from "./entities/towers/LaserTower";
 import {SlowTower} from "./entities/towers/SlowTower";
 import {controls} from "./Controls";
-import {queryParamsManager} from "./QueryParamsManager";
+/* import {queryParamsManager} from "./QueryParamsManager"; */
 
 class InterfaceManager {
     private waveElement = document.getElementById('wave')!;
@@ -27,7 +27,7 @@ class InterfaceManager {
             this.showFocusLost()
         }
 
-        document.getElementById('spawner' + queryParamsManager.getDifficulty())!.classList.add('active')
+        //document.getElementById('spawner' + queryParamsManager.getDifficulty())!.classList.add('active')
 
         this.setTowers()
     }
