@@ -91,11 +91,9 @@ class Canvas extends EventEmitter {
         ")"
     );
 
-    ctx.save();
     ctx.fillStyle = gradient;
     ctx.clearRect(0, 0, this.canvasElement.width, this.canvasElement.height);
     ctx.fillRect(0, 0, this.canvasElement.width, this.canvasElement.height);
-    ctx.restore();
 
     /*     this.waves.forEach((wave) => {
       const getY = (x: number) => {
