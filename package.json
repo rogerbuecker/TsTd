@@ -13,11 +13,13 @@
   "browserslist": [
     "last 1 Chrome versions"
   ],
-  "dependencies": {
-    "less": "^3.11.1",
-    "pug": "^3.0.0",
-    "typescript": "^3.8.3",
-    "parcel-bundler": "^1.12.4"
+  "devDependencies": {
+    "cypress": "latest",
+    "cypress-visual-regression": "latest",
+    "less": "latest",
+    "parcel-bundler": "latest",
+    "pug": "latest",
+    "typescript": "latest"
   },
-  "devDependencies": {}
+  "dependencies": {}
 }
