@@ -2,10 +2,9 @@
   "name": "rtd",
   "version": "1.0.0-beta.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "dev": "parcel public/index.pug public/*.txt public/*.xml public/img/*.png -d ./dev",
-    "build": "parcel build public/index.pug public/*.txt public/*.xml public/img/*.png -d ./dist"
+    "dev": "parcel serve public/index.pug public/*.txt public/*.xml public/img/*.png",
+    "build": "parcel build public/index.pug public/*.txt public/*.xml public/img/*.png"
   },
   "keywords": [],
   "author": "",
@@ -14,12 +13,13 @@
     "last 1 Chrome versions"
   ],
   "devDependencies": {
+    "@parcel/transformer-less": "^2.0.1",
+    "@parcel/transformer-pug": "^2.0.1",
     "cypress": "latest",
     "cypress-visual-regression": "latest",
     "less": "latest",
-    "parcel-bundler": "latest",
+    "parcel": "latest",
     "pug": "latest",
     "typescript": "latest"
-  },
-  "dependencies": {}
+  }
 }

@@ -67,6 +67,7 @@ typings/
 # Bundle
 dist
 .cache
+.parcel-cache
 .persistence
 
 # Temp dir
