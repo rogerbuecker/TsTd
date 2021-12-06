@@ -25,7 +25,10 @@ class Game {
     }
 
     start(){
-        this.updateInterval = setInterval(this.updateLoop.bind(this), 1000 / fps);
+        this.updateInterval = window.setInterval(
+          this.updateLoop.bind(this),
+          1000 / fps
+        );
         requestAnimationFrame(this.drawLoop.bind(this));
         waveManager.start();
     }
