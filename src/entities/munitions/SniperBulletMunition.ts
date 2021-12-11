@@ -19,19 +19,5 @@ export class SniperBulletMunition extends BasicBulletMunition {
         ctx.lineTo(this.target.x, this.target.y);
         ctx.stroke()
 
-        // ctx.save()
-        // ctx.globalAlpha = 0.5
-        //
-        // ctx.translate(this.x, this.y)
-        // ctx.rotate(this.angle);
-        // ctx.translate(-this.x, -this.y)
-        //
-        // ctx.beginPath();
-        //
-        // ctx.moveTo(this.x - 30, this.y);
-        // ctx.lineTo(this.x + 30, this.y);
-        //
-        // // ctx.stroke()
-        // // ctx.restore();
     }
 }
