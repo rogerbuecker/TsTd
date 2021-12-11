@@ -20,11 +20,11 @@ export abstract class AnimatedEnemy extends Enemy {
     this.image.src = this.animationSrc;
     
     if (this.last_x != this.x || this.last_y != this.y) {
-      ctx.fillRect(
+      ctx.clearRect(
         this.last_x,
-        this.last_x,
-        this.image.width / this.numberOfFrames,
-        this.image.height
+        this.last_y,
+        this.radius * 2,
+        this.radius * 2
       );
 
       ctx.drawImage(
@@ -38,8 +38,6 @@ export abstract class AnimatedEnemy extends Enemy {
         this.radius * 2,
         this.radius * 2
       );
-    } else {
-      console.log([this.x, this.y]);
     }
 
     this.last_x = this.x;

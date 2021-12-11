@@ -1,7 +1,9 @@
 import { EventEmitter } from "./tools/EventEmitter";
 
 class Canvas extends EventEmitter {
-  private readonly ctx: CanvasRenderingContext2D;
+  private readonly gameCtx: CanvasRenderingContext2D;
+  private readonly uiCtx: CanvasRenderingContext2D;
+  private readonly backgroundCtx: CanvasRenderingContext2D;
 
   private readonly gameCanvasElement: HTMLCanvasElement;
   private readonly gameBackgroundElement: HTMLCanvasElement;
@@ -20,9 +22,12 @@ class Canvas extends EventEmitter {
     this.gameBackgroundElement.tabIndex = 1;
     this.gameUiElement.tabIndex = 3;
 
-    this.ctx = this.gameCanvasElement.getContext("2d")!;
-    this.ctx.lineCap = "round";
-    this.ctx.lineJoin = "round";
+    this.gameCtx = this.gameCanvasElement.getContext("2d")!;
+    this.uiCtx = this.gameUiElement.getContext("2d")!;
+    this.backgroundCtx = this.gameBackgroundElement.getContext("2d")!;
+
+    this.gameCtx.lineCap = "round";
+    this.gameCtx.lineJoin = "round";
 
     this.resize();
 
@@ -54,8 +59,16 @@ class Canvas extends EventEmitter {
     return this.gameBackgroundElement;
   }
 
-  public getCtx(): CanvasRenderingContext2D {
-    return this.ctx;
+  public getGameCtx(): CanvasRenderingContext2D {
+    return this.gameCtx;
+  }
+
+  public getUiCtx(): CanvasRenderingContext2D {
+    return this.uiCtx;
+  }
+
+  public getBackgroundCtx(): CanvasRenderingContext2D {
+    return this.backgroundCtx;
   }
 
   //Lets hope we dont need this...
@@ -68,12 +81,14 @@ class Canvas extends EventEmitter {
     );
   } */
 
-  updateTransformMatrix() {
-    this.transformMatrix = this.ctx.getTransform();
-  }
+/*   updateTransformMatrix() {
+    this.transformMatrix = this.gameCtx.getTransform();
+  } */
 }
 
 const canvas = new Canvas();
-const ctx = canvas.getCtx();
+const gameCtx = canvas.getGameCtx();
+const uiCtx = canvas.getUiCtx();
+const backgroundCtx = canvas.getBackgroundCtx();
 
-export { canvas, ctx };
+export { canvas, gameCtx, uiCtx, backgroundCtx };

@@ -13,8 +13,8 @@
     "last 1 Chrome versions"
   ],
   "devDependencies": {
-    "@parcel/transformer-less": "^2.0.1",
-    "@parcel/transformer-pug": "^2.0.1",
+    "@parcel/transformer-less": "latest",
+    "@parcel/transformer-pug": "latest",
     "cypress": "latest",
     "cypress-visual-regression": "latest",
     "less": "latest",

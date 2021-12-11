@@ -22,6 +22,9 @@ class Map extends EventEmitter {
   public enemyBases: Base[] = [];
   private pathsCache: { [k: string]: Point[] | false } = {};
 
+  private gridWidth = Map.GRID_W * Map.TILE_SIZE;
+  private gridHeight = Map.GRID_H * Map.TILE_SIZE;
+
   constructor() {
     super();
     this.homeBase = this.addBase(Map.GRID_W - 5, 5, true);
@@ -47,11 +50,8 @@ class Map extends EventEmitter {
   }
 
   drawGrid(ctx: CanvasRenderingContext2D) {
-    const gridWidth = Map.GRID_W * Map.TILE_SIZE;
-    const gridHeight = Map.GRID_H * Map.TILE_SIZE;
-
     ctx.fillStyle = "#9ae2eb";
-    ctx.fillRect(0, 0, gridWidth, gridHeight);
+    ctx.fillRect(0, 0, this.gridWidth, this.gridHeight);
 
     ctx.strokeStyle = "#50cbfe";
     ctx.lineWidth = 1;
@@ -59,18 +59,18 @@ class Map extends EventEmitter {
 
     for (let x = 0; x < Map.GRID_W; ++x) {
       ctx.moveTo(x * Map.TILE_SIZE, 0);
-      ctx.lineTo(x * Map.TILE_SIZE, gridHeight);
+      ctx.lineTo(x * Map.TILE_SIZE, this.gridHeight);
     }
     for (let y = 0; y < Map.GRID_H; ++y) {
       ctx.moveTo(0, y * Map.TILE_SIZE);
-      ctx.lineTo(gridWidth, y * Map.TILE_SIZE);
+      ctx.lineTo(this.gridWidth, y * Map.TILE_SIZE);
     }
     ctx.closePath();
     ctx.stroke();
 
     ctx.strokeStyle = "#50cbfe";
     ctx.lineWidth = 3;
-    drawRoundedSquare(ctx, 0, 0, gridWidth, gridHeight, 4);
+    drawRoundedSquare(ctx, 0, 0, this.gridWidth, this.gridHeight, 4);
     ctx.stroke();
   }
 

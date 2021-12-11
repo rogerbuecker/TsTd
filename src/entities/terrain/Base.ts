@@ -26,24 +26,38 @@ export class Base extends GridRenderable {
   }
 
   draw(ctx: CanvasRenderingContext2D): void {
-    ctx.fillStyle = this.colors.primary;
-    ctx.fillRect(this.x, this.y, this.width, this.width);
+    //if (this.last_x != this.x || this.last_y != this.y ) {
+       /* ctx.clearRect(
+        this.last_x,
+        this.last_y,
+        this.width,
+        this.width
+      );  */
 
-    ctx.drawImage(
-      this.image,
-      0,
-      0,
-      this.image.width,
-      this.image.height,
-      this.x + 6,
-      this.y + 6,
-      this.width - 12,
-      this.width - 12
-    );
+      ctx.fillStyle = this.colors.primary;
+      ctx.fillRect(this.x, this.y, this.width, this.width);
 
-    if (this.isHome && this.life < this.maxLife) {
-      this.drawHealthBar(ctx);
-    }
+      ctx.drawImage(
+        this.image,
+        0,
+        0,
+        this.image.width,
+        this.image.height,
+        this.x + 6,
+        this.y + 6,
+        this.width - 12,
+        this.width - 12
+      );
+
+      if (this.isHome && this.life < this.maxLife) {
+        this.drawHealthBar(ctx);
+      }
+    /*  } else {
+      console.log("Base is not moving");
+    }  */
+
+    this.last_x = this.x;
+    this.last_y = this.y;
   }
 
   handleDamage() {

@@ -27,7 +27,7 @@ export abstract class GridRenderable extends Renderable {
     }
 
     update(): void {
-        const trueMouse = canvas.transformMatrix!.inverse().transformPoint(controls.mouse)
+        const trueMouse = canvas.getGameCtx()!.getTransform()!.inverse().transformPoint(controls.mouse)
 
         this.isHovered =
             trueMouse.y >= this.top &&

@@ -95,19 +95,22 @@ class Controls extends EventEmitter {
       (e.clientY - this.bounds.top) *
       (this.gameElement.clientHeight / this.bounds.height);
 
-    const transform = canvas.getCtx().getTransform();
-    if (transform.isIdentity) {
+    const transform = canvas.getGameCtx().getTransform().inverse();
+    return transform.transformPoint(e);
+    /* if (transform.isIdentity) {
       return {
         x: screenX,
         y: screenY,
       };
     } else {
-      const invMat = transform.invertSelf();
-      return {
-        x: Math.round(screenX * invMat.a + screenY * invMat.c + invMat.e),
-        y: Math.round(screenX * invMat.b + screenY * invMat.d + invMat.f),
-      };
-    }
+      return transform.transformPoint(e); */
+      /* 
+    const invMat = transform.invertSelf();
+    return {
+      x: Math.round(screenX * invMat.a + screenY * invMat.c + invMat.e),
+      y: Math.round(screenX * invMat.b + screenY * invMat.d + invMat.f),
+    }; 
+    }*/
   }
 
   tabHasFocus() {
