@@ -11,8 +11,8 @@ import { drawRoundedSquare } from "./tools/shapes";
 import { queryParamsManager } from "./QueryParamsManager";
 
 class Map extends EventEmitter {
-  public static GRID_W = 20;
-  public static GRID_H = 20;
+  public static GRID_W = 50;
+  public static GRID_H = 50;
   public static OBSTACLES = 200;
   public grid: (GridRenderable | 0 | 1)[][] = new Array(Map.GRID_W)
     .fill(0)
@@ -24,11 +24,7 @@ class Map extends EventEmitter {
 
   constructor() {
     super();
-    this.homeBase = this.addBase(
-      Map.GRID_W - 5, 
-      5,
-      true
-    );
+    this.homeBase = this.addBase(Map.GRID_W - 5, 5, true);
 
     const difficulty = queryParamsManager.getDifficulty();
 
@@ -54,7 +50,7 @@ class Map extends EventEmitter {
     const gridWidth = Map.GRID_W * Map.TILE_SIZE;
     const gridHeight = Map.GRID_H * Map.TILE_SIZE;
 
-    ctx.fillStyle = '#9ae2eb'
+    ctx.fillStyle = "#9ae2eb";
     ctx.fillRect(0, 0, gridWidth, gridHeight);
 
     ctx.strokeStyle = "#50cbfe";

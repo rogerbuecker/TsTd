@@ -117,6 +117,7 @@ body {
 body {
   line-height: 1;
   font-family: "Nunito", sans-serif;
+  background-color: blue;
 }
 
 *:focus {
@@ -129,27 +130,41 @@ body {
   --secondary: #50cbfe;
 }
 
-#inert {
+#rtd {
   display: flex;
   flex-direction: row;
 
-  & > canvas {
+  & > canvas#background {
     position: absolute;
     top: 0;
     left: 0;
     z-index: 1;
   }
 
+  & > canvas#game {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+  }
+
+  & > canvas#ui {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 3;
+  }
+
   .controls {
     width: 330px;
     padding: 15px;
-    z-index: 2;
     background-color: rgba(52, 52, 52, 0.5);
     color: var(--secondary);
     box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
       0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
     margin: 15px;
     border-radius: 5px;
+    z-index: 3;
 
     .accent {
       color: var(--accent);

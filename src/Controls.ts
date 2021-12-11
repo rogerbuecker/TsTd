@@ -2,18 +2,18 @@ import { EventEmitter } from "./tools/EventEmitter";
 import { canvas } from "./Canvas";
 
 class Controls extends EventEmitter {
-  private element: HTMLElement;
+  private gameElement: HTMLElement;
   private bounds: DOMRect;
   public mouse = { x: 0, y: 0 };
   mouseInCanvas = false;
 
   constructor() {
     super();
-    this.element = canvas.getElement();
-    this.bounds = this.element.getBoundingClientRect();
+    this.gameElement = canvas.getGameElement();
+    this.bounds = this.gameElement.getBoundingClientRect();
     canvas.on(
       "resize",
-      () => (this.bounds = this.element.getBoundingClientRect())
+      () => (this.bounds = this.gameElement.getBoundingClientRect())
     );
 
     //prevent context menue from showing
@@ -67,32 +67,33 @@ class Controls extends EventEmitter {
       }
     });
 
-    canvas
-      .getElement()
-      .addEventListener("mouseenter", () => (this.mouseInCanvas = true));
-    canvas
-      .getElement()
-      .addEventListener("mouseleave", () => (this.mouseInCanvas = false));
-    canvas.getElement().addEventListener(
+    window.addEventListener(
       "wheel",
-      (e) => {
-        if (e.deltaY > 0) {
+      (event) => {
+        if (event.deltaY > 0) {
           this.emit("wheel:down");
-        } else if (e.deltaY < 0) {
+        } else if (event.deltaY < 0) {
           this.emit("wheel:up");
         }
       },
       { passive: true }
     );
+
+    canvas
+      .getUiElement()
+      .addEventListener("mouseenter", () => (this.mouseInCanvas = true));
+    canvas
+      .getUiElement()
+      .addEventListener("mouseleave", () => (this.mouseInCanvas = false));
   }
 
   boundMouseCoordinates(e: MouseEvent) {
     const screenX =
       (e.clientX - this.bounds.left) *
-      (this.element.clientWidth / this.bounds.width);
+      (this.gameElement.clientWidth / this.bounds.width);
     const screenY =
       (e.clientY - this.bounds.top) *
-      (this.element.clientHeight / this.bounds.height);
+      (this.gameElement.clientHeight / this.bounds.height);
 
     const transform = canvas.getCtx().getTransform();
     if (transform.isIdentity) {

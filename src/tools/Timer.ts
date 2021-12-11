@@ -8,7 +8,7 @@ export class Timer {
 
     resume() {
         this.start = Date.now();
-        this.timerID = setTimeout(this.callback, this.delay);
+        this.timerID = window.setTimeout(this.callback, this.delay);
         return this;
     }
 

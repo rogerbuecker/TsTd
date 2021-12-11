@@ -44,19 +44,19 @@ class Game {
     }
 
     drawLoop() {
-        ctx.save();
-        canvas.clear();
-        camera.process(ctx);
-        map.drawGrid(ctx);
-        munitionManager.draw(ctx);
-        enemyManager.draw(ctx);
-        map.draw(ctx);
-        towerPlacer.draw(ctx);
-        ctx.restore();
+      ctx.save();
+      //canvas.clear();
+      camera.process(ctx);
+      map.drawGrid(ctx);
+      munitionManager.draw(ctx);
+      enemyManager.draw(ctx);
+      map.draw(ctx);
+      towerPlacer.draw(ctx);
+      ctx.restore();
 
-        if (this.looping) {
-            requestAnimationFrame(this.drawLoop.bind(this))
-        }
+      if (this.looping) {
+        requestAnimationFrame(this.drawLoop.bind(this));
+      }
     }
 
     gameOver() {

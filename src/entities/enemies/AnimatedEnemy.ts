@@ -18,18 +18,32 @@ export abstract class AnimatedEnemy extends Enemy {
 
   draw(ctx: CanvasRenderingContext2D): void {
     this.image.src = this.animationSrc;
+    
+    if (this.last_x != this.x || this.last_y != this.y) {
+      ctx.fillRect(
+        this.last_x,
+        this.last_x,
+        this.image.width / this.numberOfFrames,
+        this.image.height
+      );
 
-    ctx.drawImage(
-      this.image,
-      (this.frameIndex * this.image.width) / this.numberOfFrames,
-      0,
-      this.image.width / this.numberOfFrames,
-      this.image.height,
-      this.x,
-      this.y,
-      this.radius * 2,
-      this.radius * 2
-    );
+      ctx.drawImage(
+        this.image,
+        (this.frameIndex * this.image.width) / this.numberOfFrames,
+        0,
+        this.image.width / this.numberOfFrames,
+        this.image.height,
+        this.x,
+        this.y,
+        this.radius * 2,
+        this.radius * 2
+      );
+    } else {
+      console.log([this.x, this.y]);
+    }
+
+    this.last_x = this.x;
+    this.last_y = this.y;
   }
 
   update(): void {
