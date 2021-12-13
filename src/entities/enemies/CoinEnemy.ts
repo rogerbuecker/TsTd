@@ -7,8 +7,8 @@ export class CoinEnemy extends AnimatedEnemy {
   cash: number = 50;
   radius: number = 5;
 
-  numberOfFrames: number = 10;
   ticksPerFrame: number = 0;
+  cycleLoop = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
   animationSrc: string = "img/coin.png";
 
   constructor(base: Base, ticksPerFrame: number) {

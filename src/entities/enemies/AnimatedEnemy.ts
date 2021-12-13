@@ -11,7 +11,6 @@ export abstract class AnimatedEnemy extends Enemy {
   frameIndex: number = 0;
   tickCount: number = 1;
   movementSpeed: number = 1;
-  cycleLoop = [0, 1, 0, 2];
   image: HTMLImageElement = new Image();
 
   ticksPerFrame: number;
@@ -20,6 +19,8 @@ export abstract class AnimatedEnemy extends Enemy {
     | typeof FACING_UP
     | typeof FACING_LEFT
     | typeof FACING_RIGHT;
+
+  abstract  cycleLoop: Array<number>;
   abstract animationSrc: string;
 
   constructor(base: Base, ticksPerFrame: number) {
@@ -33,10 +34,10 @@ export abstract class AnimatedEnemy extends Enemy {
 
     ctx.drawImage(
       this.image,
-      this.cycleLoop[this.frameIndex] * 16,
-      this.currentDirection * 18,
-      16,
-      18,
+      this.cycleLoop[this.frameIndex] * 40,
+      this.currentDirection * 40,
+      40,
+      40,
       this.x,
       this.y,
       this.radius * 2,
