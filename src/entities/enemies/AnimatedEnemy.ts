@@ -1,18 +1,30 @@
+import {
+  FACING_DOWN,
+  FACING_LEFT,
+  FACING_RIGHT,
+  FACING_UP,
+} from "../../tools/constants";
 import { Base } from "../terrain/Base";
 import { Enemy } from "./Enemy";
 
 export abstract class AnimatedEnemy extends Enemy {
   frameIndex: number = 0;
   tickCount: number = 1;
+  movementSpeed: number = 1;
+  cycleLoop = [0, 1, 0, 2];
   image: HTMLImageElement = new Image();
 
-  numberOfFrames: number;
   ticksPerFrame: number;
+  currentDirection:
+    | typeof FACING_DOWN
+    | typeof FACING_UP
+    | typeof FACING_LEFT
+    | typeof FACING_RIGHT;
   abstract animationSrc: string;
 
-  constructor(base: Base, numberOfFrames: number, ticksPerFrame: number) {
+  constructor(base: Base, ticksPerFrame: number) {
     super(base);
-    this.numberOfFrames = numberOfFrames || 1;
+    this.currentDirection = FACING_DOWN;
     this.ticksPerFrame = ticksPerFrame || 0; // 0 means no animation
   }
 
@@ -21,10 +33,10 @@ export abstract class AnimatedEnemy extends Enemy {
 
     ctx.drawImage(
       this.image,
-      (this.frameIndex * this.image.width) / this.numberOfFrames,
-      0,
-      this.image.width / this.numberOfFrames,
-      this.image.height,
+      this.cycleLoop[this.frameIndex] * 16,
+      this.currentDirection * 18,
+      16,
+      18,
       this.x,
       this.y,
       this.radius * 2,
@@ -37,14 +49,28 @@ export abstract class AnimatedEnemy extends Enemy {
 
     this.tickCount += 1;
 
+    const target = this.getCurrentTarget();
+
+    if (target) {
+      if (this.x < target.x) {
+        this.currentDirection = FACING_RIGHT;
+      } else if (this.x > target.x) {
+        this.currentDirection = FACING_LEFT;
+      }
+
+      if (this.y < target.y) {
+        this.currentDirection = FACING_DOWN;
+      } else if (this.y > target.y) {
+        this.currentDirection = FACING_UP;
+      }
+    }
+
     if (this.tickCount > this.ticksPerFrame) {
       this.tickCount = 0;
 
-      // If the current frame index is in range
-      if (this.frameIndex < this.numberOfFrames - 1) {
-        // Go to the next frame
-        this.frameIndex += 1;
-      } else {
+      this.frameIndex += 1;
+
+      if (this.frameIndex >= this.cycleLoop.length) {
         this.frameIndex = 0;
       }
     }

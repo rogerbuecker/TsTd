@@ -11,8 +11,8 @@ export class CoinEnemy extends AnimatedEnemy {
   ticksPerFrame: number = 0;
   animationSrc: string = "img/coin.png";
 
-  constructor(base: Base, numberOfFrames: number, ticksPerFrame: number) {
-    super(base, numberOfFrames, ticksPerFrame);
+  constructor(base: Base, ticksPerFrame: number) {
+    super(base, ticksPerFrame);
   }
 
 }
