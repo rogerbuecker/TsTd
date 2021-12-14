@@ -116,7 +116,7 @@ class WavesManager {
         enemySpecsMultiplier: {
           life: ratio,
         },
-        quantity: 30 + this.waveCounter,
+        quantity: 1 + this.waveCounter,
         delay: 500,
       });
       wave.push({

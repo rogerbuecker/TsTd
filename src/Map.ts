@@ -11,24 +11,22 @@ import { drawRoundedSquare } from "./tools/shapes";
 import { queryParamsManager } from "./QueryParamsManager";
 
 class Map extends EventEmitter {
-  public static GRID_W = 30;
-  public static GRID_H = 30;
-  public static OBSTACLES = 100;
+  public static GRID_W: number = 30;
+  public static GRID_H: number = 30;
+  public static OBSTACLES: number = 100;
+  public static TILE_SIZE: number = 40;
+
   public grid: (GridRenderable | 0 | 1)[][] = new Array(Map.GRID_W)
     .fill(0)
     .map(() => new Array(Map.GRID_H).fill(0));
-  public static TILE_SIZE: number = 40;
+
   public homeBase: Base;
   public enemyBases: Base[] = [];
   private pathsCache: { [k: string]: Point[] | false } = {};
 
   constructor() {
     super();
-    this.homeBase = this.addBase(
-      Map.GRID_W - 5, 
-      5,
-      true
-    );
+    this.homeBase = this.addBase(Map.GRID_W - 5, 5, true);
 
     const difficulty = queryParamsManager.getDifficulty();
 
@@ -54,7 +52,7 @@ class Map extends EventEmitter {
     const gridWidth = Map.GRID_W * Map.TILE_SIZE;
     const gridHeight = Map.GRID_H * Map.TILE_SIZE;
 
-    ctx.fillStyle = '#9ae2eb'
+    ctx.fillStyle = "#9ae2eb";
     ctx.fillRect(0, 0, gridWidth, gridHeight);
 
     ctx.strokeStyle = "#50cbfe";

@@ -102,7 +102,7 @@ export class Camera {
 
     ctx.translate(this.gridOffset.x, this.gridOffset.y);
 
-    ctx.rotate(this.degreesToRadians(this.cameraRotation));
+    ctx.rotate(-this.degreesToRadians(this.cameraRotation));
     ctx.scale(this.cameraZoom, this.cameraZoom);
 
     ctx.translate(-this.gridOffset.x, -this.gridOffset.y);
