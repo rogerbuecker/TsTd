@@ -7,7 +7,7 @@ export class CoinEnemy extends AnimatedEnemy {
   cash: number = 50;
   
   enemySize: number = 15;
-  ticksPerFrame: number = Math.floor((Math.random()*10) + 5)
+  ticksPerFrame: number = Math.floor((Math.random()*12) + 3)
   
   spriteWidth: number = 44;
   spriteHeight: number = 40;

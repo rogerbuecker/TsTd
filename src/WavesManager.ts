@@ -12,6 +12,7 @@ import { FastEnemy } from "./entities/enemies/FastEnemy";
 import { HealerEnemy } from "./entities/enemies/HealerEnemy";
 import { AnimatedEnemy } from "./entities/enemies/AnimatedEnemy";
 import { ShipEnemy } from "./entities/enemies/ShipEnemy";
+import { BoyEnemy } from "./entities/enemies/BoyEnemy";
 
 interface WaveGroup {
   enemyClass:
@@ -122,6 +123,14 @@ class WavesManager {
       });
       wave.push({
         enemyClass: CoinEnemy,
+        enemySpecsMultiplier: {
+          life: ratio,
+        },
+        quantity: 1 + this.waveCounter,
+        delay: 500,
+      });
+      wave.push({
+        enemyClass: BoyEnemy,
         quantity: 3 + this.waveCounter,
         delay: 500,
       });

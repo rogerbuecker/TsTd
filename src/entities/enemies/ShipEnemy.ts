@@ -3,7 +3,7 @@ import { Base } from "../terrain/Base";
 
 export class ShipEnemy extends AnimatedEnemy {
   life: number = 25;
-  speed: number = 1;
+  speed: number = Math.random() + 0.5;
   cash: number = 50;
 
   enemySize: number = 36;
