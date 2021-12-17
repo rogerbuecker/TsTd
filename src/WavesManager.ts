@@ -6,7 +6,7 @@ import { interfaceManager } from "./InterfaceManager";
 import { Enemy } from "./entities/enemies/Enemy";
 import { Base } from "./entities/terrain/Base";
 import { SimpleEnemy } from "./entities/enemies/SimpleEnemy";
-import { CoinEnemy } from "./entities/enemies/CoinEnemy";
+//import { CoinEnemy } from "./entities/enemies/CoinEnemy";
 import { ArmoredEnemy } from "./entities/enemies/ArmoredEnemy";
 import { FastEnemy } from "./entities/enemies/FastEnemy";
 import { HealerEnemy } from "./entities/enemies/HealerEnemy";
@@ -119,11 +119,11 @@ class WavesManager {
         quantity: 1 + this.waveCounter,
         delay: 500,
       });
-      wave.push({
+      /* wave.push({
         enemyClass: CoinEnemy,
         quantity: 3 + this.waveCounter,
         delay: 500,
-      });
+      }); */
     } else {
       if (Math.random() > 0.7) {
         wave.push({
