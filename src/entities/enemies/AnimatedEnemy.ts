@@ -13,9 +13,6 @@ export abstract class AnimatedEnemy extends Enemy {
   movementSpeed: number = 1;
   image: HTMLImageElement = new Image();
 
-  framePositionX: number = 0;
-  framePositionY: number = 0;
-
   ticksPerFrame: number;
   currentDirection:
     | typeof FACING_DOWN
@@ -23,8 +20,9 @@ export abstract class AnimatedEnemy extends Enemy {
     | typeof FACING_LEFT
     | typeof FACING_RIGHT;
 
-  //abstract loop: any;
   abstract cycleLoop: any;
+
+  abstract enemySize: number;
   abstract spriteWidth: number;
   abstract spriteHeight: number;
   abstract animationSrc: string;
@@ -38,31 +36,18 @@ export abstract class AnimatedEnemy extends Enemy {
   draw(ctx: CanvasRenderingContext2D): void {
     this.image.src = this.animationSrc;
 
-    /* ctx.drawImage(
-      this.image,
-      this.framePositionX,
-      this.framePositionY,
-      this.spriteWidth,
-      this.spriteHeight,
-      this.x,
-      this.y,
-      Enemy.ENEMY_SIZE,
-      Enemy.ENEMY_SIZE
-    ); */
-
-    /*  this.x - this.healthBar.width / 2,
-     this.y + this.healthBar.yOffset, */
     ctx.drawImage(
       this.image,
-      this.cycleLoop[this.frameIndex] * this.spriteWidth,
-      //this.currentDirection * this.spriteHeight,
-      0,
+      this.cycleLoop[this.currentDirection][this.frameIndex].x *
+        this.spriteWidth,
+      this.cycleLoop[this.currentDirection][this.frameIndex].y *
+        this.spriteHeight,
       this.spriteWidth,
       this.spriteHeight,
-      this.x - Enemy.ENEMY_SIZE / 2,
-      this.y - Enemy.ENEMY_SIZE / 2,
-      Enemy.ENEMY_SIZE,
-      Enemy.ENEMY_SIZE
+      this.x - this.enemySize / 2,
+      this.y - this.enemySize / 2,
+      this.enemySize,
+      this.enemySize,
     );
   }
 
@@ -73,7 +58,8 @@ export abstract class AnimatedEnemy extends Enemy {
 
     const target = this.getCurrentTarget();
 
-    if (target) {
+    //only animate if we have a target and cycleLoop is long enough
+    if (target && this.cycleLoop.length === 4) {
       if (this.x < target.x) {
         this.currentDirection = FACING_RIGHT;
       } else if (this.x > target.x) {
@@ -92,7 +78,7 @@ export abstract class AnimatedEnemy extends Enemy {
 
       this.frameIndex += 1;
 
-      if (this.frameIndex >= this.cycleLoop.length) {
+      if (this.frameIndex >= this.cycleLoop[this.currentDirection].length) {
         this.frameIndex = 0;
       }
     }
