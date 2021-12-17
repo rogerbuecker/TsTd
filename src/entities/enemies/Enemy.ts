@@ -8,7 +8,7 @@ import { cashManager } from "../../CashManager";
 import { Effect } from "../effects/Effect";
 
 export abstract class Enemy extends Renderable implements Point {
-  public static ENEMY_SIZE: number = 18;
+  public static ENEMY_SIZE: number = 36;
 
   abstract speed: number;
   abstract life: number;

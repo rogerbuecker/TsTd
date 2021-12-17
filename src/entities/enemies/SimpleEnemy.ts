@@ -6,10 +6,11 @@ export class SimpleEnemy extends AnimatedEnemy {
   speed: number = 1.25;
   cash: number = 5;
   ticksPerFrame: number = 15;
-  cycleLoop = [0, 1, 0, 2];
-  spriteWidth: number = 16;
-  spriteHeight: number= 18;
-  animationSrc: string = "img/boy.png";
+  cycleLoop = [0, 1, 2];
+  spriteWidth: number = 118;
+  spriteHeight: number= 91;
+  animationSrc: string = "img/schiff.png";
+
 
   constructor(base: Base, ticksPerFrame: number) {
     super(base, ticksPerFrame);

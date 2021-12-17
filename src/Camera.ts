@@ -22,6 +22,7 @@ export class Camera {
 
   static DELTA_MOVE: number = 100;
   static SCROLL_SENSITIVITY: number = 0.1;
+  static ROTATION_SENSITIVITY: number = 0.15;
 
   private isDragging: boolean = false;
   private isRotating: boolean = false;
@@ -102,7 +103,7 @@ export class Camera {
 
     ctx.translate(this.gridOffset.x, this.gridOffset.y);
 
-    ctx.rotate(-this.degreesToRadians(this.cameraRotation));
+    ctx.rotate(-this.degreesToRadians(this.cameraRotation) * Camera.ROTATION_SENSITIVITY);
     ctx.scale(this.cameraZoom, this.cameraZoom);
 
     ctx.translate(-this.gridOffset.x, -this.gridOffset.y);

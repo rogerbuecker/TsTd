@@ -13,6 +13,9 @@ export abstract class AnimatedEnemy extends Enemy {
   movementSpeed: number = 1;
   image: HTMLImageElement = new Image();
 
+  framePositionX: number = 0;
+  framePositionY: number = 0;
+
   ticksPerFrame: number;
   currentDirection:
     | typeof FACING_DOWN
@@ -20,7 +23,8 @@ export abstract class AnimatedEnemy extends Enemy {
     | typeof FACING_LEFT
     | typeof FACING_RIGHT;
 
-  abstract cycleLoop: Array<number>;
+  //abstract loop: any;
+  abstract cycleLoop: any;
   abstract spriteWidth: number;
   abstract spriteHeight: number;
   abstract animationSrc: string;
@@ -34,14 +38,29 @@ export abstract class AnimatedEnemy extends Enemy {
   draw(ctx: CanvasRenderingContext2D): void {
     this.image.src = this.animationSrc;
 
-    ctx.drawImage(
+    /* ctx.drawImage(
       this.image,
-      this.cycleLoop[this.frameIndex] * this.spriteWidth,
-      this.currentDirection * this.spriteHeight,
+      this.framePositionX,
+      this.framePositionY,
       this.spriteWidth,
       this.spriteHeight,
       this.x,
       this.y,
+      Enemy.ENEMY_SIZE,
+      Enemy.ENEMY_SIZE
+    ); */
+
+    /*  this.x - this.healthBar.width / 2,
+     this.y + this.healthBar.yOffset, */
+    ctx.drawImage(
+      this.image,
+      this.cycleLoop[this.frameIndex] * this.spriteWidth,
+      //this.currentDirection * this.spriteHeight,
+      0,
+      this.spriteWidth,
+      this.spriteHeight,
+      this.x - Enemy.ENEMY_SIZE / 2,
+      this.y - Enemy.ENEMY_SIZE / 2,
       Enemy.ENEMY_SIZE,
       Enemy.ENEMY_SIZE
     );
